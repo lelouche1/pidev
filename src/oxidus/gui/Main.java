@@ -10,10 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;  
-import oxidus.entites.Agence; 
-import oxidus.entites.Reservation;
-import oxidus.services.ServAgence;
-import oxidus.services.ServReservation;
+
 
 /**
  *
@@ -25,8 +22,11 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("menuReservation.fxml"));
+        
+        Parent root = FXMLLoader.load(getClass().getResource("menuAgence.fxml"));
+       // Parent root = FXMLLoader.load(getClass().getResource("ajouterAgence.fxml"));      
         // Parent root = FXMLLoader.load(getClass().getResource("AjourReservation.fxml"));
+      //  Parent root = FXMLLoader.load(getClass().getResource("menuReservation.fxml"));
         
         Scene scene = new Scene(root);
         

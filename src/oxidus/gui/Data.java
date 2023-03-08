@@ -23,6 +23,12 @@ public class Data {
      public static int prix;
      public static long nbre_jours;
      public static int id;
+     public static int id_agence;
+     
+      public static String nom_agence;
+       public static String villeagence;
+        public static String adresse_ag;
+         public static int nbVoiture;
    
      public static int prixModele(String marque){
          for (Modele modele : Modele.values()) {      

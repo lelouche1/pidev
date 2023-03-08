@@ -5,10 +5,13 @@
  */
 package oxidus.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.binding.LongBinding;
 import javafx.collections.FXCollections;
@@ -25,7 +28,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javax.mail.MessagingException;
 import oxidus.entites.Reservation;
+import oxidus.services.Email;
 import oxidus.services.ServReservation;
 
 /**
@@ -123,6 +128,12 @@ public class AjourReservationController implements Initializable {
 
             if (svr.ajouterReservation(r) != -1) {
                 Data.information("notification", "ajout reussit");
+                Email e = new Email();
+                try {
+                    e.envoyer("michelscoot@gmail.com", LocalDate.now().toString(), r.getNom_user());
+                } catch (MessagingException ex) {
+                    Logger.getLogger(AjourReservationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 //############################################################################"
                 try {
                     // Charger la scène2.fxml
@@ -138,12 +149,14 @@ public class AjourReservationController implements Initializable {
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) btn_validerResrvation.getScene().getWindow();
                     stage.setScene(scene);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (IOException ee) {
+                    ee.printStackTrace();
                 }
+            }else{
+                Data.warning("echec", "echec ajout dans la base de donnee");
             }
         } else {
-            Data.warning("echec", "echec ajout dans la base de donnee");
+            Data.warning("erreur", erreur);
         }
     }
     //############################################################################"

@@ -20,5 +20,5 @@ public interface IntAgence {
     List<Agence> afficherAgence();
     List<Agence> afficherUneAgence(int id_Agence); 
     List<Agence> recherche(Agence a);
-    public Agence recherche(String nom, String ville);
+    public Agence recherche(String nom, String adresse);
 }

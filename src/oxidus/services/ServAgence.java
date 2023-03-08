@@ -9,9 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oxidus.entites.Agence;
+import oxidus.entites.Reservation;
+import oxidus.utils.DBConnexion;
 
 /**
  *
@@ -20,6 +25,10 @@ import oxidus.entites.Agence;
 public class ServAgence implements IntAgence {
 
     private Connection connection;
+    
+     public ServAgence() {
+        this.connection = DBConnexion.getInstance().getConnexion();
+    }
 
     @Override
     public int ajouterAgence(Agence a) {
@@ -27,14 +36,15 @@ public class ServAgence implements IntAgence {
         int etat = -1;
         try {
             String req = "insert into agence(nomAgence, nbreVehicule, "
-                    + "emailAg,ville,adresse) values (?,?,?,?,?,?)";
+                    + "emailAg,ville,adresse) values (?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(req);
-            // preparedStatement.setint(1, null);
+          //   preparedStatement.setString(1, null);
             preparedStatement.setString(1, a.getNomAg());
             preparedStatement.setInt(2, a.getNbreVehicule());
             preparedStatement.setString(3, a.getEmailAg());
             preparedStatement.setString(4, a.getVilleAgence());
             preparedStatement.setString(5, a.getAdresse());
+            
             etat = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,8 +128,34 @@ public class ServAgence implements IntAgence {
     }
 
     @Override
-    public Agence recherche(String nom, String ville) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Agence recherche(String nom, String adresse) {
+ //       List<Collaboration> listcol = new ArrayList<Collaboration>();
+        String req = "SELECT * FROM agence WHERE nomAgence LIKE ? and adresse LIKE ? ";
+
+        Agence aa = new Agence();
+        // Création d'un objet PreparedStatement
+        PreparedStatement stmt;
+        try {
+            stmt = connection.prepareStatement(req);
+            stmt.setString(1, "%" + nom + "%");
+            stmt.setString(2, "%" + adresse + "%");
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                // Récupération des données de chaque ligne
+                aa.setId_agence(rs.getInt("id_agence"));
+                aa.setAdresse(rs.getString("adresse"));
+              aa.setAdresse(rs.getString("nomAgence"));
+                aa.setAdresse(rs.getString("ville"));
+                aa.setAdresse(rs.getString("emailAg"));
+                aa.setNbreVehicule(rs.getInt("nbreVehicule"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ServReservation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return aa;
     }
 
 }
