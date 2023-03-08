@@ -7,10 +7,13 @@
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/Main.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/AjourReservationController.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/ModifieReservationController.java</file>
+            <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/entites/Agence.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/menuReservationController.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/services/ServReservation.java</file>
+            <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/services/ServAgence.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/entites/Reservation.java</file>
             <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/Data.java</file>
+            <file>file:/C:/Users/lelou/Documents/NetBeansProjects/oxidus/src/oxidus/gui/LeTest.java</file>
         </group>
     </open-files>
 </project-private>

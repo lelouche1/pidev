@@ -1,0 +1,40 @@
+.search-box{
+        -fx-background-color: #FFFFFF;
+        -fx-background-radius: 100;
+        -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0, 0.0, 10.0);
+}
+
+.transparent{
+    -fx-background-color: rgba(0,0,0,0);
+}
+
+.button-mod{
+    -fx-background-color: #828282;
+    -fx-background-radius: 30;
+}
+
+.left-bar{
+    -fx-background-color: #D3D3D3;
+}
+
+.shadow{
+    -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0, 0.0, 10.0);
+}
+
+.detail-card{
+    
+    -fx-background-color: f2ebe9;
+    -fx-background-radius: 30;
+}
+
+.up-bar-menu{
+    
+    -fx-background-color: f2ebe9;
+    -fx-background-radius: 30;
+}
+
+.anchor-piechart{
+    
+    -fx-background-color: #eddcd9;
+    -fx-background-radius: 30;
+}

@@ -1,0 +1,33 @@
+.anchor-demande-left{
+    -fx-background-image: url("pink_radius.png");
+    -fx-background-size: cover;
+}
+
+.anchor-demande-right{
+    -fx-background-image: url("demande2.jpg");
+    -fx-background-size: cover;
+}
+
+.button{
+    -fx-background-color: #f2ebe9;
+    -fx-background-radius: 30px;
+    -fx-text-fill: black;
+    -fx-font: 18px "Avenir next";
+    -fx-padding: 8px;
+
+}
+
+.text-field{
+        -fx-background-color: #FFFFFF;
+        -fx-background-radius: 100;
+        -fx-effect: dropshadow(three-pass-box,rgba(0,0,0,0.1), 10.0 , 0.0, 0.0, 10.0);
+}
+
+.text-area, .choice-box{
+    -fx-border-radius: 15;
+}
+
+.button:hover{
+    -fx-effect: dropshadow(three-pass-box,rgb(105,105,105),3,3,0,0);
+    -fx-background-color: #eddcd9;
+}
