@@ -33,8 +33,17 @@
     -fx-background-radius: 30;
 }
 
+
 .anchor-piechart{
     
     -fx-background-color: #eddcd9;
     -fx-background-radius: 30;
+}
+
+#anchor-reservation{
+    -fx-background-color: #2E2E39; 
+}
+
+#btn-retourRes{
+    -fx-background-color: #F0C300;
 }

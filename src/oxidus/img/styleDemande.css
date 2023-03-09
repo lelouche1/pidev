@@ -1,4 +1,12 @@
 .anchor-demande-left{
+   
+-fx-background-image: url("denis.jpg");
+  -fx-background-size: cover;
+    -fx-widh: 100% 
+  
+}
+
+#img-back-left-aj-res{
     -fx-background-image: url("denis.jpg");
     -fx-background-size: cover;
     -fx-widh: 100%

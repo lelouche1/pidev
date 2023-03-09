@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -18,11 +17,11 @@
    <right>
       <VBox style="-fx-background-color: back;" BorderPane.alignment="CENTER">
          <children>
-            <AnchorPane prefHeight="540.0" prefWidth="398.0" stylesheets="@../img/styleDemande.css">
+            <AnchorPane prefHeight="540.0" prefWidth="398.0" styleClass="anchor-demande-right" stylesheets="@../img/styleDemande.css" VBox.vgrow="ALWAYS">
                <children>
                   <Label layoutX="25.0" layoutY="113.0" text="nom" textFill="WHITE">
                      <font>
-                        <Font size="17.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Label layoutX="28.0" layoutY="213.0" text="modele voiture" textFill="WHITE">
@@ -58,62 +57,63 @@
                      </font>
                   </Text>
                </children>
-               <styleClass>
-                  <String fx:value="anchor-demande-right" />
-                  <String fx:value="anchor-demande-right" />
-               </styleClass>
             </AnchorPane>
          </children>
       </VBox>
    </right>
-   <left>
-      <AnchorPane prefHeight="540.0" prefWidth="382.0" styleClass="anchor-demande-left" stylesheets="@../img/styleDemande.css" BorderPane.alignment="CENTER">
+   <center>
+      <VBox BorderPane.alignment="CENTER">
          <children>
-            <Text fill="#d39925" layoutX="23.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Louez ">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d39925" layoutX="23.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="liber">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d0bb91" layoutX="121.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="votre">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d0bb91" layoutX="105.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="té">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d39925" layoutX="23.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="av">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d0bb91" layoutX="62.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ec">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d39925" layoutX="23.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <Text fill="#d0bb91" layoutX="124.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
-               <font>
-                  <Font name="Impact" size="40.0" />
-               </font>
-            </Text>
-            <ImageView fitHeight="160.0" fitWidth="163.0" layoutX="-5.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../img/logooxi.png" />
-               </image>
-            </ImageView>
-         </children></AnchorPane>
-   </left>
+            <AnchorPane styleClass="anchor-demande-left" stylesheets="@../img/styleDemande.css" VBox.vgrow="ALWAYS">
+               <children>
+                  <Text fill="#d39925" layoutX="23.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Louez ">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d39925" layoutX="23.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="liber">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d0bb91" layoutX="121.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="votre">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d0bb91" layoutX="105.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="té">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d39925" layoutX="23.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="av">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d0bb91" layoutX="62.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ec">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d39925" layoutX="23.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#d0bb91" layoutX="124.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
+                     <font>
+                        <Font name="Impact" size="40.0" />
+                     </font>
+                  </Text>
+                  <ImageView fitHeight="160.0" fitWidth="163.0" layoutX="-5.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../img/logooxi.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </center>
 </BorderPane>
