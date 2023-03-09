@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -30,7 +32,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.mail.MessagingException;
 import oxidus.entites.Reservation;
+import oxidus.services.Email;
 import oxidus.services.ServReservation;
 
 /**
@@ -40,9 +44,15 @@ import oxidus.services.ServReservation;
 public class menuReservationController implements Initializable {
     @FXML
     private TableView<Reservation> tabViewReserv;
+    
+    
+    @FXML
+    private Button btn_imprimer;
 
     @FXML
     private TableColumn<Reservation, String> col_nom_res;
+        @FXML
+    private TableColumn<Reservation, String> col_status;
 
     @FXML
     private TableColumn<Reservation, LocalDate> col_date_deb;
@@ -62,8 +72,6 @@ public class menuReservationController implements Initializable {
     @FXML
     private TextField textfiel_recherche;
     
-    @FXML
-    private Button modifierReservation;
 
     ServReservation servicesRese = new ServReservation();
 
@@ -94,6 +102,7 @@ public class menuReservationController implements Initializable {
         col_date_fin.setCellValueFactory(new PropertyValueFactory<Reservation, LocalDate>("date_fin"));
         col_prix_res.setCellValueFactory(new PropertyValueFactory<Reservation, Integer>("prix"));
         col_modele.setCellValueFactory(new PropertyValueFactory<Reservation, String>("modele"));
+        col_status.setCellValueFactory(new PropertyValueFactory<Reservation, String>("status"));
         
                //****************** recherche *****************************************
         FilteredList<Reservation> filterdata = new FilteredList<Reservation>(listeReservations, btn_supp_res -> true);
@@ -114,6 +123,8 @@ public class menuReservationController implements Initializable {
                     return true;  //filter match titre
                 }
                 if (reservation.getNom_user().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+                    return true;  //filter match type collaboration
+                }if (reservation.getStatus().toLowerCase().indexOf(lowerCaseFilter) != -1) {
                     return true;  //filter match type collaboration
                 }
                 if (prix.toLowerCase().indexOf(lowerCaseFilter) != -1) {
@@ -151,11 +162,16 @@ public class menuReservationController implements Initializable {
 
                     Data.modele = tabViewReserv.getItems().get(myIndex).getModele();
                     Data.nom_reser = tabViewReserv.getItems().get(myIndex).getNom_user();
-                    //Data.type = tableGeneralCollab.getItems().get(myIndex).getType_collaboration();
+                 //   String pprix = tabViewReserv.getItems().get(myIndex).getNom_user();
+                //    Data.prix_total = Integer.parseInt(pprix);
                     Reservation rr = new Reservation();
                      ServReservation svc = new ServReservation();
                     rr= svc.recherche(Data.nom_reser,Data.modele);
                      Data.id = rr.getId_reservation();
+                     System.out.println("la reservation recuperer \n"+rr);
+                     Data.email_User = rr.getEmail_user();
+                     Data.dateDebut = rr.getDate_debut();
+                     Data.dateFin = rr.getDate_fin();
                     // label_periode.setText(tableGeneralCollab.getItems().get(myIndex).getDescription());
                 /*    label_periode.setText(cc.getDate_sortie().toString());
                     label_descrition.setText(cc.getDescription());
@@ -172,47 +188,48 @@ public class menuReservationController implements Initializable {
     void btn_supp_res(ActionEvent event) {
         Reservation r = new Reservation();
         r.setId_reservation(Data.id);
+        r.setStatus(Data.ValeurStatus[3]);
         ServReservation svc = new ServReservation();
-        if(svc.supprimerReservation(r)){
-            System.out.println("suppression ressuit");
+          System.out.println("suppression id = "+Data.id);
+          System.out.println("valeur data status = "+Data.ValeurStatus[3]);
+        if(svc.modifierStatusReservation(r)){
+            Data.information("Annulation", "Votre Demande d'annulation a été pris en compte");
             ServReservation serrese = new ServReservation();
-            serrese.createChart(anchPie);
+            //----------- envoie message -----------------
+            Email e = new Email();
+                try {
+                    e.envoyer(Data.email_User, LocalDate.now().toString(), r.getNom_user(),"Reservation annuler merci de votre "
+                            + "confiance en vres VROM VROM");
+                } catch (MessagingException ex) {
+                    Logger.getLogger(AjourReservationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
             affichagerTableMenu();
         }else{
             System.out.println("echec suppression");
         }
     }
     
-      @FXML
-    void modifierReservation(ActionEvent event) {
-        
-        try {
-         // Charger la scène2.fxml
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("modifieReservation.fxml"));
-            Parent root = loader.load();
+    
+     @FXML
+    void btn_imprimer(ActionEvent event) {
+         try {
+                    // Charger la scène2.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("imprimerRerservation.fxml"));
+                    Parent root = loader.load();
 
-            // Passer les données de nom et prénom à la scène2
-            ModifieReservationController modifController = loader.getController();
-            Reservation r = new Reservation();
-            ServReservation servRes = new ServReservation();
-            r.setNom_user(Data.nom_reser);
-            r.setModele(Data.modele);
-            //on recupere toute les info dune collaboration
-            System.out.println("le titre "+Data.nom_reser);
-            System.out.println("le type "+Data.modele);
-           // r.setDate_debut(LocalDate.MAX);
-            Reservation rr= servRes.recherche(Data.nom_reser,Data.modele);
-            Data.id = rr.getId_reservation();
-          //  Data.nom_reser=r.getNom_user();
-         //   Data.email=c.getEmail_user();
-            modifController.afficherModif(rr);
+                    // Passer les données de nom et prénom à la scène2
+                    ImprimerRerservationController modifController = loader.getController();
+                    modifController.afficherModif(Data.nom_reser, Data.modele, Data.dateDebut, Data.dateFin, Data.prix,
+                            Data.prix_total, Data.nbre_jours);
 
-            // Afficher la scène2
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) modifierReservation.getScene().getWindow();
-            stage.setScene(scene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+                    // Afficher la scène2
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) btn_imprimer.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
+                
     }
+    
 }

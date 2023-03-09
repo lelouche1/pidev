@@ -15,16 +15,21 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import oxidus.entites.Agence;
 import oxidus.entites.Reservation;
 import oxidus.services.ServAgence;
+import oxidus.services.ServReservation;
 
 /**
  * FXML Controller class
@@ -91,8 +96,37 @@ public class MenuAgenceController implements Initializable {
 
     @FXML
     void modifierReservation(ActionEvent event) {
+        
+        try {
+         // Charger la scène2.fxml
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ModifierAgence.fxml"));
+            Parent root = loader.load();
 
+            // Passer les données de nom et prénom à la scène2
+            ModifierAgenceController modifController = loader.getController();
+            Agence a = new Agence();
+            ServAgence servAg = new ServAgence();
+            a.setNomAg(Data.nom_agence);
+            a.setAdresse(Data.adresse_ag);
+            //on recupere toute les info dune collaboration
+         //   System.out.println("le nom "+Data.nom_agence);
+        //    System.out.println("l'adresse est  "+Data.adresse_ag);
+            Agence aa= servAg.recherche(Data.nom_agence,Data.adresse_ag);
+            Data.id_agence = a.getId_agence();
+          //  Data.nom_reser=r.getNom_user();
+         //   Data.email=c.getEmail_user();
+            modifController.afficherModif(aa);
+
+            // Afficher la scène2
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) modifierReservation.getScene().getWindow();
+            stage.setScene(scene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    
+    
 
     public void afficherAgences(List<Agence> agences) {
         ObservableList<Agence> listeAgences = FXCollections.observableArrayList(agences);

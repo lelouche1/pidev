@@ -33,6 +33,10 @@ private Modele enumModele;
 
 private String modele="yassin";
 
+private String email_user;
+
+private String status;
+
     public Reservation() {
     }
 
@@ -77,6 +81,9 @@ private String modele="yassin";
     public void setId_user(int id_user) {
         this.id_user = id_user;
     }
+        public void setEmail_user(String email_user) {
+        this.email_user = email_user;
+    }
 
     public void setNom_user(String nom_user) {
         this.nom_user = nom_user;
@@ -110,6 +117,21 @@ private String modele="yassin";
         this.modele = modele;
     }
 
-   
+    public String getEmail_user() {
+        return email_user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" + "id_reservation=" + id_reservation + ", id_voiture=" + id_voiture + ", id_user=" + id_user + ", nom_user=" + nom_user + ", date_debut=" + date_debut + ", date_fin=" + date_fin + ", prix=" + prix + ", enumModele=" + enumModele + ", modele=" + modele + ", email_user=" + email_user + ", status=" + status + '}';
+    }  
 
 }

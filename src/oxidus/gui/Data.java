@@ -19,11 +19,13 @@ public class Data {
     public static LocalDate dateDebut;
     public static LocalDate dateFin;
     public static String modele;
+    public static String email_User;
      public static long prix_total;
      public static int prix;
      public static long nbre_jours;
      public static int id;
      public static int id_agence;
+     public static String[] ValeurStatus={"EN ATTENTE","EN COURS","FINIS","ANNULER"} ;
      
       public static String nom_agence;
        public static String villeagence;

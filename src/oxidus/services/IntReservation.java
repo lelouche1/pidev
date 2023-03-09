@@ -16,6 +16,7 @@ public interface IntReservation {
      int ajouterReservation(Reservation r);
     boolean supprimerReservation(Reservation r);
     boolean modifierReservation(Reservation r);
+    boolean modifierStatusReservation(Reservation r);
     List<Reservation> afficherReservation();
     List<Reservation> afficherReservationUnClient(int id_reservation); 
     List<Reservation> recherche(Reservation r);

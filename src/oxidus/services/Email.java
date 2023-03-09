@@ -25,7 +25,7 @@ import javax.mail.internet.MimeMessage;
  * @author lelou
  */
 public class Email {
-      public static void envoyer(String destinataire, String date,String name) throws MessagingException {
+      public static void envoyer(String destinataire, String date,String name,String messagePersonnaliser) throws MessagingException {
             
             String username = "workesprit22";
             String password ="mqtobyqaddxfgxgv";
@@ -43,21 +43,21 @@ public class Email {
                   return new PasswordAuthentication(username, password);}
           });
             
-            Message message = prepareMessage(session,username,destinataire,date,name);
+            Message message = prepareMessage(session,username,destinataire,date,name,messagePersonnaliser);
             Transport.send(message);
             System.out.println("Message envoyé !!");
 }
         
     
 
-    private static Message prepareMessage(Session session, String username,String destinataire, String date,String name) throws MessagingException {
+    private static Message prepareMessage(Session session, String username,String destinataire, String date,String name, String messagePersonnaliser) throws MessagingException {
         
         try { 
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(username));
             message.setRecipient(javax.mail.Message.RecipientType.TO, new InternetAddress(destinataire));
             message.setSubject("Confirmation de Reservation");
-            message.setText("Mr/Mme "+name+" ,  merci de votre confiance envres VROM VROM\n "+date+"\n");
+            message.setText("Mr/Mme "+name+", "+messagePersonnaliser+" "+date+"\n");
             return message;
         } catch (AddressException ex) {
             Logger.getLogger( Email.class.getName()).log(Level.SEVERE, null, ex);

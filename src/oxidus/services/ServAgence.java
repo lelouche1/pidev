@@ -75,7 +75,8 @@ public class ServAgence implements IntAgence {
 
         boolean status = false;
         try {
-            String req = "update agence set nomAgence=?, nbreVehicule=?, emailAg=?, ville=?, adresse=? where id_agence=?";
+            String req = "update agence set nomAgence=?, nbreVehicule=?, emailAg=?, "
+                    + "ville=?, adresse=? where id_agence=?";
             // String req = "update collaboration set titre=?, description=?, date_sortie=? where titre=? and description=?";
             PreparedStatement preparedStatement = connection.prepareStatement(req);
             preparedStatement.setString(1, a.getNomAg());
@@ -84,6 +85,8 @@ public class ServAgence implements IntAgence {
             preparedStatement.setString(3, a.getEmailAg());
             preparedStatement.setString(4, a.getVilleAgence());
             preparedStatement.setString(5, a.getAdresse());
+             preparedStatement.setInt(6, a.getId_agence());
+            
             status = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,9 +149,9 @@ public class ServAgence implements IntAgence {
                 // Récupération des données de chaque ligne
                 aa.setId_agence(rs.getInt("id_agence"));
                 aa.setAdresse(rs.getString("adresse"));
-              aa.setAdresse(rs.getString("nomAgence"));
-                aa.setAdresse(rs.getString("ville"));
-                aa.setAdresse(rs.getString("emailAg"));
+              aa.setNomAg(rs.getString("nomAgence"));
+                aa.setVilleAgence(rs.getString("ville"));
+                aa.setEmailAg(rs.getString("emailAg"));
                 aa.setNbreVehicule(rs.getInt("nbreVehicule"));
             }
 

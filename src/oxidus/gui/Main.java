@@ -23,10 +23,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         
-        Parent root = FXMLLoader.load(getClass().getResource("menuAgence.fxml"));
-       // Parent root = FXMLLoader.load(getClass().getResource("ajouterAgence.fxml"));      
+       //  Parent root = FXMLLoader.load(getClass().getResource("menuAgence.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ajouterAgence.fxml"));      
         // Parent root = FXMLLoader.load(getClass().getResource("AjourReservation.fxml"));
-      //  Parent root = FXMLLoader.load(getClass().getResource("menuReservation.fxml"));
+        //Parent root = FXMLLoader.load(getClass().getResource("menuReservation.fxml"));
+        // Parent root = FXMLLoader.load(getClass().getResource("AdminGestionReservation.fxml"));
         
         Scene scene = new Scene(root);
         

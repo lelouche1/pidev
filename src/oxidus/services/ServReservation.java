@@ -19,6 +19,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.layout.AnchorPane;
 import oxidus.entites.Modele;
 import oxidus.entites.Reservation;
+import oxidus.gui.Data;
 import oxidus.utils.DBConnexion;
 
 /**
@@ -38,7 +39,7 @@ public class ServReservation implements IntReservation {
         int etat = -1;
         try {
             String req = "insert into reservations(id_voiture, id_user, nom_user, "
-                    + "date_debut,date_fin, prix,modele) values (?,?,?,?,?,?,?)";
+                    + "date_debut,date_fin, prix,modele,email_user,status) values (?,?,?,?,?,?,?,?,?)";
             PreparedStatement preparedStatement = connection.prepareStatement(req);
             // preparedStatement.setint(1, null);
             preparedStatement.setInt(1, r.getId_voiture());
@@ -52,6 +53,15 @@ public class ServReservation implements IntReservation {
             int prix = prixModele(r.getModele());
             preparedStatement.setInt(6,prix);
             preparedStatement.setString(7, r.getModele());
+            preparedStatement.setString(8, r.getEmail_user());
+            if(r.getDate_fin().isBefore(LocalDate.now())){
+                    r.setStatus(Data.ValeurStatus[2]);
+                }else if(r.getDate_debut().isBefore(LocalDate.now()) && r.getDate_fin().isAfter(LocalDate.now())){
+                    r.setStatus(Data.ValeurStatus[1]);
+                }else if(r.getDate_debut().isAfter(LocalDate.now())){
+                     r.setStatus(Data.ValeurStatus[0]);
+                }
+            preparedStatement.setString(9, r.getStatus());
             etat = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +92,7 @@ public class ServReservation implements IntReservation {
     public boolean modifierReservation(Reservation r) {
         boolean status = false;
         try {
-            String req = "update reservations set nom_user=?, date_debut=?, date_fin=?, modele=?, prix=? where id_reservation=?";
+            String req = "update reservations set nom_user=?, date_debut=?, date_fin=?, modele=?, prix=? ,email_user where id_reservation=?";
             // String req = "update collaboration set titre=?, description=?, date_sortie=? where titre=? and description=?";
             PreparedStatement preparedStatement = connection.prepareStatement(req);
             preparedStatement.setString(1, r.getNom_user());
@@ -107,6 +117,7 @@ public class ServReservation implements IntReservation {
                     // Faire quelque chose si le modèle est PORSH
                     preparedStatement.setInt(5, modele.TOYOTA.getPrix());
                 }
+                 preparedStatement.setString(6, r.getEmail_user());
             }
             preparedStatement.setInt(6, r.getId_reservation());
             status = preparedStatement.executeUpdate() > 0;
@@ -133,10 +144,14 @@ public class ServReservation implements IntReservation {
                 java.sql.Date sqlDate = rs.getDate("date_debut");
                 LocalDate dateDebut = sqlDate.toLocalDate();
                 r.setDate_debut(dateDebut);
-                LocalDate datefin = sqlDate.toLocalDate();
+                java.sql.Date sqlDate2 = rs.getDate("date_fin");
+                LocalDate datefin = sqlDate2.toLocalDate();
                 r.setDate_debut(datefin);
                 r.setModele(rs.getString("modele"));
                 r.setPrix(rs.getInt("prix"));
+                r.setEmail_user(rs.getString("email_user"));
+                r.setStatus(rs.getString("status"));
+                
                 list.add(r);
             }
         } catch (SQLException e) {
@@ -239,15 +254,32 @@ public class ServReservation implements IntReservation {
                 LocalDate dateDeb = sqlDate1.toLocalDate();
                 rr.setDate_debut(dateDeb);
                 java.sql.Date sqlDate2 = rs.getDate("date_fin");
-                LocalDate dateFin = sqlDate1.toLocalDate();
+                LocalDate dateFin = sqlDate2.toLocalDate();
                 rr.setDate_fin(dateFin);
                 rr.setPrix(rs.getInt("prix"));
-
+                rr.setEmail_user(rs.getString("email_user"));
+                rr.setStatus(rs.getString("status"));
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(ServReservation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rr;
+    }
+
+    @Override
+    public boolean modifierStatusReservation(Reservation r) {
+ boolean status = false;
+        try {
+            String req = "update reservations set status=? where id_reservation=?";
+            // String req = "update collaboration set titre=?, description=?, date_sortie=? where titre=? and description=?";
+            PreparedStatement preparedStatement = connection.prepareStatement(req);
+            preparedStatement.setString(1, r.getStatus());           
+            preparedStatement.setInt(2, r.getId_reservation());
+            status = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 }

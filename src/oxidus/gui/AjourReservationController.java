@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javafx.beans.binding.IntegerBinding;
 import javafx.beans.binding.LongBinding;
 import javafx.collections.FXCollections;
@@ -57,6 +58,13 @@ public class AjourReservationController implements Initializable {
 
     @FXML
     private Button btn_validerResrvation;
+       
+    @FXML
+    private TextField emailField;
+    
+    
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
+            "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
 
     /**
      * Initializes the controller class.
@@ -97,8 +105,10 @@ public class AjourReservationController implements Initializable {
         if (txt_nom.getText().isEmpty()) {
             valide = false;
             erreur = "veuillez saisir un nom";
-            //   erreur_nom.setText("veuillez remplir ce champ");
-        } else if (date_deb.getValue() == null) {
+        }else if (emailField.getText().isEmpty()) {
+            valide = false;
+            erreur = "veuillez saisir un email";
+        }else if (date_deb.getValue() == null) {
             valide = false;
             erreur = "veuillez saisir une date de debut";
             //   erreurDateDebut.setText("veuillez remplir ce champ");
@@ -109,9 +119,12 @@ public class AjourReservationController implements Initializable {
         } else if (r.getDate_debut().isAfter(r.getDate_fin())) {
             valide = false;
             erreur = "date de debut doit etre inferieur date de fin";
+        }else if (isValidEmail(emailField.getText())) {
+            erreur = "veuillez saisir un email au format valide";
         }
 
         r.setNom_user(txt_nom.getText());
+        r.setEmail_user(emailField.getText());
         Data.nom_reser = r.getNom_user();
         r.setDate_debut(date_deb.getValue());
 
@@ -125,25 +138,21 @@ public class AjourReservationController implements Initializable {
             Data.nbre_jours = jours;
             long prix = jours * r.getPrix();
             Data.prix_total = prix;
-
+             r.setPrix((int)Data.prix_total);
             if (svr.ajouterReservation(r) != -1) {
-                Data.information("notification", "ajout reussit");
+                Data.information("notification", "envoie de le confirmation Reservation par email");
                 Email e = new Email();
                 try {
-                    e.envoyer("michelscoot@gmail.com", LocalDate.now().toString(), r.getNom_user());
+                    e.envoyer(r.getEmail_user(), LocalDate.now().toString(), r.getNom_user(),"merci "
+                            + "de votre confiance envres VROM VROM");
                 } catch (MessagingException ex) {
                     Logger.getLogger(AjourReservationController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                //############################################################################"
-                try {
+                //----------------- changement de page ----------------------------------
+                 try {
                     // Charger la scène2.fxml
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("imprimerRerservation.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("menuReservation.fxml"));
                     Parent root = loader.load();
-
-                    // Passer les données de nom et prénom à la scène2
-                    ImprimerRerservationController modifController = loader.getController();
-                    modifController.afficherModif(Data.nom_reser, Data.modele, Data.dateDebut, Data.dateFin, Data.prix,
-                            Data.prix_total, Data.nbre_jours);
 
                     // Afficher la scène2
                     Scene scene = new Scene(root);
@@ -152,6 +161,8 @@ public class AjourReservationController implements Initializable {
                 } catch (IOException ee) {
                     ee.printStackTrace();
                 }
+                
+                //---------------------------------------------------------------------
             }else{
                 Data.warning("echec", "echec ajout dans la base de donnee");
             }
@@ -161,4 +172,28 @@ public class AjourReservationController implements Initializable {
     }
     //############################################################################"
 
+        
+    @FXML 
+   void btn_annuler(ActionEvent event) {
+        Data.information("annulation", "nouvelle reservation annuler");
+       try {
+                    // Charger la scène2.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("menuReservation.fxml"));
+                    Parent root = loader.load();
+
+
+                    // Afficher la scène2
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) btn_validerResrvation.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
+   }
+   
+   
+    private boolean isValidEmail(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
+    }
+   
 }

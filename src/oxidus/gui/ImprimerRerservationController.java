@@ -5,17 +5,20 @@
  */
 package oxidus.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.print.PageLayout;
 import javafx.print.PageOrientation;
 import javafx.print.Paper;
 import javafx.print.Printer;
 import javafx.print.PrinterJob;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,7 +69,20 @@ public class ImprimerRerservationController implements Initializable {
 
     @FXML
     void annuler_impression(ActionEvent event) {
-       
+        Data.warning("annuler", "impression annuler");
+       try {
+                    // Charger la scène2.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("menuReservation.fxml"));
+                    Parent root = loader.load();
+
+
+                    // Afficher la scène2
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) annuler_impression.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
     }
 
     @FXML
@@ -95,6 +111,19 @@ public class ImprimerRerservationController implements Initializable {
                 printerJob.endJob();
             }
         }
+        try {
+                    // Charger la scène2.fxml
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("menuReservation.fxml"));
+                    Parent root = loader.load();
+
+
+                    // Afficher la scène2
+                    Scene scene = new Scene(root);
+                    Stage stage = (Stage) imprimer_reservation.getScene().getWindow();
+                    stage.setScene(scene);
+                } catch (IOException ee) {
+                    ee.printStackTrace();
+                }
     }
 
   public void afficherModif(String nom,String modele ,LocalDate dateDeb, LocalDate dateFin, Integer prixx, Long prix_total, Long nbJour) {

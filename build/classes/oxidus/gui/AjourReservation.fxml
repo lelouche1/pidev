@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="772.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="oxidus.gui.AjourReservationController">
+   <right>
+      <VBox style="-fx-background-color: back;" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane prefHeight="540.0" prefWidth="398.0" stylesheets="@../img/styleDemande.css">
+               <children>
+                  <Label layoutX="25.0" layoutY="113.0" text="nom" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="28.0" layoutY="213.0" text="modele voiture" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="28.0" layoutY="270.0" text="date debut" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="37.0" layoutY="326.0" text="date fin" textFill="WHITE">
+                     <font>
+                        <Font size="17.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="choice_modele" layoutX="133.0" layoutY="202.0" prefHeight="32.0" prefWidth="169.0" />
+                  <TextField fx:id="txt_nom" layoutX="133.0" layoutY="98.0" prefHeight="36.0" prefWidth="170.0" />
+                  <DatePicker fx:id="date_deb" layoutX="133.0" layoutY="256.0" prefHeight="35.0" prefWidth="174.0" />
+                  <DatePicker fx:id="date_fin" layoutX="133.0" layoutY="312.0" prefHeight="35.0" prefWidth="174.0" />
+                  <Button fx:id="btn_validerResrvation" layoutX="218.0" layoutY="427.0" mnemonicParsing="false" onAction="#btn_validerResrvation" prefHeight="52.0" prefWidth="110.0" text="Reserver" />
+                  <Label layoutX="24.0" layoutY="165.0" text="email" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="17.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="emailField" layoutX="133.0" layoutY="151.0" prefHeight="35.0" prefWidth="170.0" />
+                  <Button fx:id="btn_annuler" layoutX="52.0" layoutY="427.0" mnemonicParsing="false" onAction="#btn_annuler" prefHeight="51.0" prefWidth="111.0" text="Annuler" />
+                  <Text fill="WHITE" layoutX="76.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Saisir les informations">
+                     <font>
+                        <Font name="Impact" size="25.0" />
+                     </font>
+                  </Text>
+               </children>
+               <styleClass>
+                  <String fx:value="anchor-demande-right" />
+                  <String fx:value="anchor-demande-right" />
+               </styleClass>
+            </AnchorPane>
+         </children>
+      </VBox>
+   </right>
+   <left>
+      <AnchorPane prefHeight="540.0" prefWidth="382.0" styleClass="anchor-demande-left" stylesheets="@../img/styleDemande.css" BorderPane.alignment="CENTER">
+         <children>
+            <Text fill="#d39925" layoutX="23.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Louez ">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d39925" layoutX="23.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="liber">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d0bb91" layoutX="121.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="votre">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d0bb91" layoutX="105.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="té">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d39925" layoutX="23.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="av">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d0bb91" layoutX="62.0" layoutY="286.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ec">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d39925" layoutX="23.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <Text fill="#d0bb91" layoutX="124.0" layoutY="336.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VROM">
+               <font>
+                  <Font name="Impact" size="40.0" />
+               </font>
+            </Text>
+            <ImageView fitHeight="160.0" fitWidth="163.0" layoutX="-5.0" layoutY="374.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../img/logooxi.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+   </left>
+</BorderPane>
